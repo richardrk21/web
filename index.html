@@ -1,27 +1,1033 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bank Branch Analytics Calculator</title>
+
+    <title>Bank Branch Analytics Business Case Calculator</title>
+
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
-        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; }
-        h1 { color: #2c3e50; text-align: center; }
-        .input-group { margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 5px; }
-        label { display: block; margin: 10px 0 5px 0; font-weight: bold; }
-        input { width: 100px; padding: 5px; margin-left: 10px; }
-        button { background: #3498db; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+
+        * {
+
+            margin: 0;
+
+            padding: 0;
+
+            box-sizing: border-box;
+
+        }
+
+        
+
+        body {
+
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+            line-height: 1.6;
+
+            color: #333;
+
+            background-color: #f8f9fa;
+
+            padding: 20px;
+
+        }
+
+        
+
+        .container {
+
+            max-width: 1000px;
+
+            margin: 0 auto;
+
+            background: white;
+
+            border-radius: 8px;
+
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+
+            overflow: hidden;
+
+        }
+
+        
+
+        .header {
+
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+
+            color: white;
+
+            padding: 30px;
+
+            text-align: center;
+
+        }
+
+        
+
+        .header h1 {
+
+            font-size: 2.2em;
+
+            margin-bottom: 10px;
+
+            font-weight: 600;
+
+        }
+
+        
+
+        .header p {
+
+            font-size: 1.1em;
+
+            opacity: 0.9;
+
+        }
+
+        
+
+        .content {
+
+            padding: 40px;
+
+        }
+
+        
+
+        .input-section {
+
+            display: grid;
+
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+
+            gap: 25px;
+
+            margin-bottom: 40px;
+
+        }
+
+        
+
+        .input-group {
+
+            background: #f8f9fa;
+
+            padding: 25px;
+
+            border-radius: 8px;
+
+            border-left: 4px solid #3498db;
+
+        }
+
+        
+
+        .input-group h3 {
+
+            color: #2c3e50;
+
+            margin-bottom: 20px;
+
+            font-size: 1.3em;
+
+        }
+
+        
+
+        .form-row {
+
+            display: flex;
+
+            align-items: center;
+
+            margin-bottom: 15px;
+
+        }
+
+        
+
+        .form-row label {
+
+            flex: 1;
+
+            font-weight: 500;
+
+            color: #555;
+
+        }
+
+        
+
+        .form-row input {
+
+            flex: 0 0 120px;
+
+            padding: 8px 12px;
+
+            border: 2px solid #ddd;
+
+            border-radius: 4px;
+
+            font-size: 1em;
+
+            text-align: right;
+
+            transition: border-color 0.3s;
+
+        }
+
+        
+
+        .form-row input:focus {
+
+            outline: none;
+
+            border-color: #3498db;
+
+        }
+
+        
+
+        .calculate-btn {
+
+            width: 100%;
+
+            padding: 15px;
+
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+
+            color: white;
+
+            border: none;
+
+            border-radius: 6px;
+
+            font-size: 1.2em;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: transform 0.2s;
+
+            margin-bottom: 40px;
+
+        }
+
+        
+
+        .calculate-btn:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+
+        }
+
+        
+
+        .results {
+
+            display: none;
+
+        }
+
+        
+
+        .results.show {
+
+            display: block;
+
+            animation: fadeIn 0.5s ease-in;
+
+        }
+
+        
+
+        @keyframes fadeIn {
+
+            from { opacity: 0; transform: translateY(20px); }
+
+            to { opacity: 1; transform: translateY(0); }
+
+        }
+
+        
+
+        .results-grid {
+
+            display: grid;
+
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+            gap: 20px;
+
+            margin-bottom: 30px;
+
+        }
+
+        
+
+        .metric-card {
+
+            background: white;
+
+            border: 1px solid #e0e0e0;
+
+            border-radius: 8px;
+
+            padding: 20px;
+
+            text-align: center;
+
+            transition: transform 0.2s;
+
+        }
+
+        
+
+        .metric-card:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+
+        }
+
+        
+
+        .metric-value {
+
+            font-size: 2em;
+
+            font-weight: bold;
+
+            color: #2c3e50;
+
+            margin-bottom: 5px;
+
+        }
+
+        
+
+        .metric-label {
+
+            color: #666;
+
+            font-size: 0.9em;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+        }
+
+        
+
+        .revenue-highlight {
+
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+
+            color: white;
+
+            transform: scale(1.05);
+
+        }
+
+        
+
+        .revenue-highlight .metric-value {
+
+            color: white;
+
+        }
+
+        
+
+        .revenue-highlight .metric-label {
+
+            color: rgba(255,255,255,0.9);
+
+        }
+
+        
+
+        .detailed-breakdown {
+
+            background: #f8f9fa;
+
+            border-radius: 8px;
+
+            padding: 25px;
+
+            margin-top: 20px;
+
+        }
+
+        
+
+        .breakdown-title {
+
+            color: #2c3e50;
+
+            margin-bottom: 20px;
+
+            font-size: 1.3em;
+
+        }
+
+        
+
+        .breakdown-table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+        }
+
+        
+
+        .breakdown-table th,
+
+        .breakdown-table td {
+
+            text-align: left;
+
+            padding: 12px;
+
+            border-bottom: 1px solid #ddd;
+
+        }
+
+        
+
+        .breakdown-table th {
+
+            background: #2c3e50;
+
+            color: white;
+
+            font-weight: 600;
+
+        }
+
+        
+
+        .breakdown-table tr:hover {
+
+            background: rgba(52, 152, 219, 0.05);
+
+        }
+
+        
+
+        .total-row {
+
+            font-weight: bold;
+
+            background: rgba(52, 152, 219, 0.1);
+
+        }
+
+        
+
+        .currency {
+
+            color: #27ae60;
+
+            font-weight: 600;
+
+        }
+
+        
+
+        @media (max-width: 768px) {
+
+            .content {
+
+                padding: 20px;
+
+            }
+
+            
+
+            .input-section {
+
+                grid-template-columns: 1fr;
+
+                gap: 20px;
+
+            }
+
+            
+
+            .results-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            
+
+            .breakdown-table {
+
+                font-size: 0.9em;
+
+            }
+
+        }
+
     </style>
+
 </head>
+
 <body>
+
     <div class="container">
-        <h1>Bank Branch Analytics Calculator</h1>
-        <div class="input-group">
-            <label>Number of branches: <input type="number" id="branches" value="50"></label>
-            <label>Daily visits per branch: <input type="number" id="visits" value="100"></label>
-            <button onclick="alert('Calculator is working!')">Test Calculator</button>
+
+        <div class="header">
+
+            <h1>Bank Branch Analytics Calculator</h1>
+
+            <p>Calculate revenue impact from improved conversion rates</p>
+
         </div>
+
+        
+
+        <div class="content">
+
+            <div class="input-section">
+
+                <div class="input-group">
+
+                    <h3>Network Parameters</h3>
+
+                    <div class="form-row">
+
+                        <label for="branches">Number of branches:</label>
+
+                        <input type="number" id="branches" value="50" min="1">
+
+                    </div>
+
+                    <div class="form-row">
+
+                        <label for="businessDays">Business days per year:</label>
+
+                        <input type="number" id="businessDays" value="250" min="1">
+
+                    </div>
+
+                    <div class="form-row">
+
+                        <label for="dailyVisits">Daily visits per branch:</label>
+
+                        <input type="number" id="dailyVisits" value="100" min="1">
+
+                    </div>
+
+                    <div class="form-row">
+
+                        <label for="improvement">Conversion improvement (%):</label>
+
+                        <input type="number" id="improvement" value="5" min="0.1" step="0.1">
+
+                    </div>
+
+                </div>
+
+                
+
+                <div class="input-group">
+
+                    <h3>Revenue Parameters (€)</h3>
+
+                    <div class="form-row">
+
+                        <label for="serviceRevenue">Service fee per transaction:</label>
+
+                        <input type="number" id="serviceRevenue" value="3" min="0" step="0.01">
+
+                    </div>
+
+                    <div class="form-row">
+
+                        <label for="salesRevenue">Revenue per sale:</label>
+
+                        <input type="number" id="salesRevenue" value="50" min="0" step="0.01">
+
+                    </div>
+
+                    <div class="form-row">
+
+                        <label for="customerValue">New customer LTV (12m):</label>
+
+                        <input type="number" id="customerValue" value="60" min="0" step="0.01">
+
+                    </div>
+
+                </div>
+
+                
+
+                <div class="input-group">
+
+                    <h3>Cost Parameters (€)</h3>
+
+                    <div class="form-row">
+
+                        <label for="monthlyFee">Monthly fee per branch:</label>
+
+                        <span style="flex: 0 0 120px; padding: 8px 12px; background: #f5f5f5; border: 2px solid #ddd; border-radius: 4px; font-size: 1em; text-align: right; color: #666;">€150</span>
+
+                    </div>
+
+                    <div class="form-row">
+
+                        <label for="setupFee">One-off fee per branch:</label>
+
+                        <span style="flex: 0 0 120px; padding: 8px 12px; background: #f5f5f5; border: 2px solid #ddd; border-radius: 4px; font-size: 1em; text-align: right; color: #666;">€1,500</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            
+
+            <button class="calculate-btn" onclick="calculateROI()">Calculate Business Case</button>
+
+            
+
+            <div id="results" class="results">
+
+                <div class="results-grid">
+
+                    <div class="metric-card">
+
+                        <div class="metric-value" id="totalVisits">0</div>
+
+                        <div class="metric-label">Annual Network Visits</div>
+
+                    </div>
+
+                    <div class="metric-card">
+
+                        <div class="metric-value" id="serviceConversions">0</div>
+
+                        <div class="metric-label">Additional Service Conversions</div>
+
+                    </div>
+
+                    <div class="metric-card">
+
+                        <div class="metric-value" id="salesConversions">0</div>
+
+                        <div class="metric-label">Additional Sales Conversions</div>
+
+                    </div>
+
+                    <div class="metric-card">
+
+                        <div class="metric-value" id="newCustomers">0</div>
+
+                        <div class="metric-label">Additional New Customers</div>
+
+                    </div>
+
+                    <div class="metric-card">
+
+                        <div class="metric-value" id="totalRevenue">€0</div>
+
+                        <div class="metric-label">Additional Annual Revenue</div>
+
+                    </div>
+
+                    <div class="metric-card">
+
+                        <div class="metric-value" id="totalCosts">€0</div>
+
+                        <div class="metric-label">Total Annual Costs</div>
+
+                    </div>
+
+                    <div class="metric-card revenue-highlight">
+
+                        <div class="metric-value" id="netROI">€0</div>
+
+                        <div class="metric-label">Net Annual ROI</div>
+
+                    </div>
+
+                    <div class="metric-card">
+
+                        <div class="metric-value" id="paybackPeriod">0</div>
+
+                        <div class="metric-label">Payback Period (Months)</div>
+
+                    </div>
+
+                </div>
+
+                
+
+                <div class="detailed-breakdown">
+
+                    <h3 class="breakdown-title">ROI Analysis & Cost Breakdown</h3>
+
+                    <table class="breakdown-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Component</th>
+
+                                <th>Calculation</th>
+
+                                <th>Amount (€)</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+
+                                <td><strong>Revenue Streams</strong></td>
+
+                                <td></td>
+
+                                <td></td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td>&nbsp;&nbsp;Service Fees</td>
+
+                                <td><span id="serviceCalc">0</span></td>
+
+                                <td class="currency" id="serviceTotal">€0</td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td>&nbsp;&nbsp;Sales Revenue</td>
+
+                                <td><span id="salesCalc">0</span></td>
+
+                                <td class="currency" id="salesTotal">€0</td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td>&nbsp;&nbsp;New Customer Revenue</td>
+
+                                <td><span id="customerCalc">0</span></td>
+
+                                <td class="currency" id="customerTotal">€0</td>
+
+                            </tr>
+
+                            <tr class="total-row">
+
+                                <td><strong>Total Additional Revenue</strong></td>
+
+                                <td>-</td>
+
+                                <td class="currency" id="totalRevenueBreakdown"><strong>€0</strong></td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td><strong>Cost Components</strong></td>
+
+                                <td></td>
+
+                                <td></td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td>&nbsp;&nbsp;One-off Fee per Branch</td>
+
+                                <td><span id="setupCalc">0</span></td>
+
+                                <td class="currency" id="setupTotal">€0</td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td>&nbsp;&nbsp;Monthly Fees (Annual)</td>
+
+                                <td><span id="monthlyCalc">0</span></td>
+
+                                <td class="currency" id="monthlyTotal">€0</td>
+
+                            </tr>
+
+                            <tr class="total-row">
+
+                                <td><strong>Total Annual Costs</strong></td>
+
+                                <td>-</td>
+
+                                <td class="currency" id="totalCostBreakdown"><strong>€0</strong></td>
+
+                            </tr>
+
+                            <tr style="background: rgba(46, 204, 113, 0.1); font-weight: bold;">
+
+                                <td><strong>Net Annual ROI</strong></td>
+
+                                <td>Revenue - Costs</td>
+
+                                <td class="currency" id="netROIBreakdown"><strong>€0</strong></td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
+
+
+
+    <script>
+
+        function formatNumber(num) {
+
+            return new Intl.NumberFormat('en-US').format(Math.round(num));
+
+        }
+
+        
+
+        function formatCurrency(num) {
+
+            return new Intl.NumberFormat('en-US', {
+
+                style: 'currency',
+
+                currency: 'EUR',
+
+                minimumFractionDigits: 0,
+
+                maximumFractionDigits: 0
+
+            }).format(Math.round(num));
+
+        }
+
+        
+
+        function calculateROI() {
+
+            // Get input values
+
+            const branches = parseInt(document.getElementById('branches').value) || 0;
+
+            const businessDays = parseInt(document.getElementById('businessDays').value) || 0;
+
+            const dailyVisits = parseInt(document.getElementById('dailyVisits').value) || 0;
+
+            const improvement = parseFloat(document.getElementById('improvement').value) || 0;
+
+            const serviceRevenue = parseFloat(document.getElementById('serviceRevenue').value) || 0;
+
+            const salesRevenue = parseFloat(document.getElementById('salesRevenue').value) || 0;
+
+            const customerValue = parseFloat(document.getElementById('customerValue').value) || 0;
+
+            
+
+            // Fixed cost parameters
+
+            const monthlyFee = 150;
+
+            const setupFeePerBranch = 1500;
+
+            
+
+            // Calculate base metrics
+
+            const totalAnnualVisits = branches * dailyVisits * businessDays;
+
+            
+
+            // Current conversion breakdown (based on your framework)
+
+            const serviceInteractions = Math.round(totalAnnualVisits * 0.70);
+
+            const salesConversations = Math.round(totalAnnualVisits * 0.20);
+
+            const newCustomerAcquisitions = Math.round(totalAnnualVisits * 0.10);
+
+            
+
+            // Additional conversions from improvement
+
+            const improvementRate = improvement / 100;
+
+            const additionalServiceConversions = Math.round(serviceInteractions * improvementRate);
+
+            const additionalSalesConversions = Math.round(salesConversations * improvementRate);
+
+            const additionalNewCustomers = Math.round(newCustomerAcquisitions * improvementRate);
+
+            
+
+            // Revenue calculations
+
+            const serviceRevenueTotal = additionalServiceConversions * serviceRevenue;
+
+            const salesRevenueTotal = additionalSalesConversions * salesRevenue;
+
+            const customerRevenueTotal = additionalNewCustomers * customerValue;
+
+            const totalAdditionalRevenue = serviceRevenueTotal + salesRevenueTotal + customerRevenueTotal;
+
+            
+
+            // Cost calculations
+
+            const annualMonthlyCosts = branches * monthlyFee * 12;
+
+            const totalSetupCosts = branches * setupFeePerBranch;
+
+            const totalAnnualCosts = annualMonthlyCosts + totalSetupCosts;
+
+            
+
+            // ROI calculations
+
+            const netAnnualROI = totalAdditionalRevenue - totalAnnualCosts;
+
+            const monthlyNetROI = netAnnualROI / 12;
+
+            const paybackPeriod = monthlyNetROI > 0 ? totalAnnualCosts / monthlyNetROI : 999;
+
+            
+
+            // Update main metrics
+
+            document.getElementById('totalVisits').textContent = formatNumber(totalAnnualVisits);
+
+            document.getElementById('serviceConversions').textContent = formatNumber(additionalServiceConversions);
+
+            document.getElementById('salesConversions').textContent = formatNumber(additionalSalesConversions);
+
+            document.getElementById('newCustomers').textContent = formatNumber(additionalNewCustomers);
+
+            document.getElementById('totalRevenue').textContent = formatCurrency(totalAdditionalRevenue);
+
+            document.getElementById('totalCosts').textContent = formatCurrency(totalAnnualCosts);
+
+            document.getElementById('netROI').textContent = formatCurrency(netAnnualROI);
+
+            document.getElementById('paybackPeriod').textContent = paybackPeriod < 999 ? Math.ceil(paybackPeriod) + ' months' : 'N/A';
+
+            
+
+            // Update breakdown table
+
+            document.getElementById('serviceCalc').textContent = `${formatNumber(additionalServiceConversions)} × €${serviceRevenue}`;
+
+            document.getElementById('serviceTotal').textContent = formatCurrency(serviceRevenueTotal);
+
+            
+
+            document.getElementById('salesCalc').textContent = `${formatNumber(additionalSalesConversions)} × €${salesRevenue}`;
+
+            document.getElementById('salesTotal').textContent = formatCurrency(salesRevenueTotal);
+
+            
+
+            document.getElementById('customerCalc').textContent = `${formatNumber(additionalNewCustomers)} × €${customerValue}`;
+
+            document.getElementById('customerTotal').textContent = formatCurrency(customerRevenueTotal);
+
+            
+
+            document.getElementById('totalRevenueBreakdown').innerHTML = '<strong>' + formatCurrency(totalAdditionalRevenue) + '</strong>';
+
+            
+
+            document.getElementById('setupCalc').textContent = `${branches} branches × €${setupFeePerBranch}`;
+
+            document.getElementById('setupTotal').textContent = formatCurrency(totalSetupCosts);
+
+            
+
+            document.getElementById('monthlyCalc').textContent = `${branches} branches × €${monthlyFee} × 12`;
+
+            document.getElementById('monthlyTotal').textContent = formatCurrency(annualMonthlyCosts);
+
+            
+
+            document.getElementById('totalCostBreakdown').innerHTML = '<strong>' + formatCurrency(totalAnnualCosts) + '</strong>';
+
+            document.getElementById('netROIBreakdown').innerHTML = '<strong>' + formatCurrency(netAnnualROI) + '</strong>';
+
+            
+
+            // Show results
+
+            document.getElementById('results').classList.add('show');
+
+        }
+
+        
+
+        // Auto-calculate on input change
+
+        document.querySelectorAll('input').forEach(input => {
+
+            input.addEventListener('input', () => {
+
+                if (document.getElementById('results').classList.contains('show')) {
+
+                    calculateROI();
+
+                }
+
+            });
+
+        });
+
+        
+
+        // Initial calculation
+
+        calculateROI();
+
+    </script>
+
 </body>
+
 </html>
