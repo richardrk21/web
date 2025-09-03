@@ -492,8 +492,16 @@
             
             // ROI calculations
             const netAnnualROI = totalAdditionalRevenue - totalAnnualCosts;
-            const monthlyNetROI = netAnnualROI / 12;
-            const paybackPeriod = monthlyNetROI > 0 ? totalAnnualCosts / monthlyNetROI : 999;
+            const monthlyRevenue = totalAdditionalRevenue / 12;
+            const monthlyRecurringCosts = annualMonthlyCosts / 12;
+            const monthlyNetCashFlow = monthlyRevenue - monthlyRecurringCosts;
+            
+            // Payback period calculation: time to recover setup costs + first year of recurring costs
+            let paybackPeriod = 999; // Default for cases where payback isn't achievable
+            if (monthlyNetCashFlow > 0) {
+                // Time to recover setup costs with monthly positive cash flow
+                paybackPeriod = totalSetupCosts / monthlyNetCashFlow;
+            }
             
             // Track calculation event in Google Analytics
             gtag('event', 'calculate_roi', {
